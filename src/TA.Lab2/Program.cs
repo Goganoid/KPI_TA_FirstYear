@@ -37,7 +37,7 @@ class Program
             Graph graph = new Graph(PromptPath());
             if (input == "1")
             {
-                GcAlgorithm.GreedyColoring(graph);
+                GcAlgorithm.GreedyColoring(graph,0);
             }
             else
             {

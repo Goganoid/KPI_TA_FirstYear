@@ -22,6 +22,7 @@ public static class DijkstraAlgorithm
         parents[src] = -1;
         
         for (int count = 0; count < V - 1; count++) {
+            
             int u = MinDistance(dist, sptSet,V);
             
             sptSet[u] = true;
@@ -30,7 +31,9 @@ public static class DijkstraAlgorithm
             // vertices of the picked vertex.
             for (int v = 0; v < V; v++)
                 // update if not visited && edge u-v exists && distance is less than current
-                if (!sptSet[v] && adjMatrix[u, v] != 0 && dist[u] != int.MaxValue &&
+                if (!sptSet[v] && 
+                    adjMatrix[u, v] != 0 && 
+                    dist[u] != int.MaxValue &&
                     dist[u] + adjMatrix[u, v] < dist[v])
                 {
                     dist[v] = dist[u] + adjMatrix[u, v];
@@ -72,6 +75,7 @@ public static class DijkstraAlgorithm
         int min = int.MaxValue, minIndex = -1;
  
         for (int v = 0; v < vertices; v++)
+            // if not visited and less than minimal distance
             if (sptSet[v] == false && dist[v] <= min) {
                 min = dist[v];
                 minIndex = v;

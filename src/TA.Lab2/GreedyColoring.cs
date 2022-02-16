@@ -3,7 +3,7 @@ using GraphTools;
 
 public static class GcAlgorithm
 {
-    public  static void GreedyColoring(Graph graph)
+    public  static void GreedyColoring(Graph graph, int src)
     {
         
         List<List<int>> Adj = new();
@@ -18,21 +18,25 @@ public static class GcAlgorithm
             Adj[edge.End].Add(edge.Start);
         }
         
+        // fill with -1 set src color to 0
         int[] result = Enumerable.Repeat(-1, graph.VertCount).ToArray();
-        result[0] = 0;
+        result[src] = 0;
        
 
         for (int i = 1; i < graph.VertCount; i++)
         {
+            // fill with true
             bool[] available = Enumerable.Repeat(true, graph.VertCount).ToArray();
             foreach (var vertex in Adj[i])
             {
+                // if colored then make unavailable
                 if (result[vertex] != -1) available[result[vertex]] = false;
             }
 
             int color;
             for (color = 0; color < graph.VertCount; color++)
             {
+                // first available color
                 if (available[color]) break;
             }
 
