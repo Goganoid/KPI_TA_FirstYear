@@ -59,16 +59,8 @@ class Program
             else if (input.Trim() == "3")
             {
                 Console.WriteLine("Looking for dist_graph.txt,cost_graph.txt,simple_graph.txt");
-                if (!CheckFileExists("dist_graph.txt") ||
-                    !CheckFileExists("cost_graph.txt") ||
-                    !CheckFileExists("simple_graph.txt"))
-                {
-                    Console.WriteLine("Can't continue");
-                    return;
-                }
                 Graph distGraph = new Graph("dist_graph.txt");
-                Graph costGraph = new Graph("cost_graph.txt");
-                Graph simpleGraph = new Graph("simle_graph.txt");
+                DijkstraAlgorithm.Dijkstra(distGraph,0);
                 
             }
     }

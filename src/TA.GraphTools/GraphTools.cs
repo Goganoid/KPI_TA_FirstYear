@@ -28,9 +28,9 @@ public class Graph
         EdgeCount = size[1];
         Edges = lines.Skip(1).Select(line =>
         {
-            var values = Array.ConvertAll(line.Trim().Split(), int.Parse);
-            int weight = values.Length == 3 ? values[2] : 1;
-            return new Edge {Start = values[0], End = values[1], Weight = weight};
+            var values = Array.ConvertAll(line.Trim().Split(), double.Parse);
+            int weight = values.Length == 3 ? (int)(values[2]*10) : 1;
+            return new Edge {Start = (int)values[0], End = (int)values[1], Weight = weight};
         }).ToArray();
     }
 
@@ -54,7 +54,7 @@ public static class GraphMethods
         var adjacencyMatrix = new int[n, n];
         for (var i = 0; i < edges.Length; i++)
         {
-            adjacencyMatrix[edges[i].Start , edges[i].End] = edges[i].Weight;
+            adjacencyMatrix[Math.Abs(edges[i].Start) , edges[i].End] = edges[i].Weight;
             // if not directed
             if(edges[i].Start>0) adjacencyMatrix[edges[i].End , edges[i].Start] = edges[i].Weight;
         }

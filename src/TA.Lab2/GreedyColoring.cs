@@ -5,34 +5,47 @@ public static class GcAlgorithm
 {
     public  static void GreedyColoring(Graph graph, int src)
     {
-        
+        // o(n)
         List<List<int>> Adj = new();
-        
         for (int i = 0; i < graph.VertCount; i++)
         {
             Adj.Add(new List<int>());
         }
+        ////
+        // o(n)
         foreach (var edge in graph.Edges)
         {
             Adj[edge.Start].Add(edge.End);
             Adj[edge.End].Add(edge.Start);
         }
+        ////
         
         // fill with -1 set src color to 0
-        int[] result = Enumerable.Repeat(-1, graph.VertCount).ToArray();
+        // 0(n)
+        int[] result = new int[graph.VertCount];
+        for (int i = 0; i < graph.VertCount; i++)
+        {
+            result[i] = -1;
+        }
+        // o(1)
         result[src] = 0;
        
-
+        //
         for (int i = 1; i < graph.VertCount; i++)
         {
             // fill with true
-            bool[] available = Enumerable.Repeat(true, graph.VertCount).ToArray();
+            bool[] available = new bool[graph.VertCount];
+            for (int j = 0; j < graph.VertCount; j++)
+            {
+                available[j] = true;
+            }
+            //O(E)
             foreach (var vertex in Adj[i])
             {
                 // if colored then make unavailable
                 if (result[vertex] != -1) available[result[vertex]] = false;
             }
-
+            
             int color;
             for (color = 0; color < graph.VertCount; color++)
             {

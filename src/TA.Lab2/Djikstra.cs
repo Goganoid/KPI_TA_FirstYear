@@ -5,6 +5,7 @@ public static class DijkstraAlgorithm
     public static void Dijkstra(Graph graph,int src)
     {
         int[,] adjMatrix = graph.AdjMatrix;
+        GraphMethods.PrintMatrix(adjMatrix);
         // number of vertices
         int V = graph.AdjMatrix.GetLength(0);
         // min distances
@@ -54,7 +55,7 @@ public static class DijkstraAlgorithm
             if (vertexIndex != src)
             {
                 Console.Write("\n" + src+ " -> ");
-                Console.Write(vertexIndex + " \t\t ");
+                Console.Write((vertexIndex>=10?vertexIndex:vertexIndex+"\t")  + " \t ");
                 Console.Write(dist[vertexIndex] + "\t\t");
                 PrintPath(vertexIndex, parents);
             }
