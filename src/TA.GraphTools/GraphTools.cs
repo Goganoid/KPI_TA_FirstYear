@@ -55,7 +55,8 @@ public static class GraphMethods
         for (var i = 0; i < edges.Length; i++)
         {
             adjacencyMatrix[edges[i].Start , edges[i].End] = edges[i].Weight;
-            adjacencyMatrix[edges[i].End , edges[i].Start] = edges[i].Weight;
+            // if not directed
+            if(edges[i].Start>0) adjacencyMatrix[edges[i].End , edges[i].Start] = edges[i].Weight;
         }
 
         return adjacencyMatrix;
