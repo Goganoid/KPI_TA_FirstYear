@@ -2,10 +2,9 @@ namespace TA.Lab2;
 using GraphTools;
 public static class DijkstraAlgorithm
 {
-    public static void Dijkstra(Graph graph,int src)
+    public static void Dijkstra(Graph graph,int src,bool print=true)
     {
         int[,] adjMatrix = graph.AdjMatrix;
-        GraphMethods.PrintMatrix(adjMatrix);
         // number of vertices
         int V = graph.AdjMatrix.GetLength(0);
         // min distances
@@ -42,7 +41,7 @@ public static class DijkstraAlgorithm
                 }
                    
         }
-        PrintSolution(dist,V,parents,src);
+        if(print) PrintSolution(dist,V,parents,src);
     }
     private static void PrintSolution(int[] dist,int vertices,int[] parents,int src)
     {
@@ -56,7 +55,7 @@ public static class DijkstraAlgorithm
             {
                 Console.Write("\n" + src+ " -> ");
                 Console.Write((vertexIndex>=10?vertexIndex:vertexIndex+"\t")  + " \t ");
-                Console.Write(dist[vertexIndex] + "\t\t");
+                Console.Write(dist[vertexIndex]/10 + "\t\t");
                 PrintPath(vertexIndex, parents);
             }
         }

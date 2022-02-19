@@ -3,7 +3,7 @@ using GraphTools;
 
 public static class GcAlgorithm
 {
-    public  static void GreedyColoring(Graph graph, int src)
+    public  static void GreedyColoring(Graph graph, int src,bool print=true)
     {
         // o(n)
         List<List<int>> Adj = new();
@@ -57,10 +57,11 @@ public static class GcAlgorithm
 
         }
 
-        for (int i = 0; i < graph.VertCount; i++)
-        {
-            Console.WriteLine($"Vertex:{i}|Color:{result[i]}");
-        }
+        if(print)
+            for (int i = 0; i < graph.VertCount; i++)
+            {
+                Console.WriteLine($"Vertex:{i}|Color:{result[i]}");
+            }
 
     }
 }

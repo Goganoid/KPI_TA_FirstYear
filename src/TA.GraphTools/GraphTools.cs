@@ -12,7 +12,7 @@ public struct Edge
 
 public class Graph
 {
-    public readonly Edge[] Edges;
+    public  Edge[] Edges;
     public readonly int VertCount;
     public readonly int EdgeCount;
     public int[,] AdjMatrix => GraphMethods.GetAdjacencyMatrix(Edges, VertCount);
@@ -20,18 +20,47 @@ public class Graph
     public Graph(string path)
     {
         var lines = File.ReadAllLines(path);
-        Console.WriteLine("Input:");
-        foreach (var line in lines) Console.WriteLine(line);
+        // Console.WriteLine("Input:");
+        // foreach (var line in lines) Console.WriteLine(line);
         // parse first line
-        var size = Array.ConvertAll(lines[0].Trim().Split(), int.Parse);
-        VertCount = size[0];
-        EdgeCount = size[1];
-        Edges = lines.Skip(1).Select(line =>
+        try
         {
-            var values = Array.ConvertAll(line.Trim().Split(), double.Parse);
-            int weight = values.Length == 3 ? (int)(values[2]*10) : 1;
-            return new Edge {Start = (int)values[0], End = (int)values[1], Weight = weight};
-        }).ToArray();
+            var size = Array.ConvertAll(lines[0].Trim().Split(), int.Parse);
+            VertCount = size[0];
+            EdgeCount = size[1];
+            Edges = lines.Skip(1).Select(line =>
+            {
+                var values = Array.ConvertAll(line.Trim().Split(), double.Parse);
+                int weight = values.Length == 3 ? (int) (values[2] * 10) : 1;
+                return new Edge {Start = (int) values[0], End = (int) values[1], Weight = weight};
+            }).ToArray();
+        }
+        catch (FormatException e)
+        {
+            Console.WriteLine("File has invalid format");
+            throw;
+        }
+    }
+
+    public Graph(int edges, int possibleVertices)
+    {
+        var random = new Random();
+        Edges = new Edge[edges];
+        for(int i=0;i<edges;i++)
+        {
+            Edges[i].Start = random.Next(possibleVertices);
+            int endVertex = Edges[i].Start;
+            while (endVertex==Edges[i].Start)
+            {
+                endVertex = random.Next(possibleVertices);
+            }
+            Edges[i].End = endVertex;
+            Edges[i].Weight = random.Next(20);
+        }
+
+        VertCount = Edges.Max(edge => Math.Max(edge.Start, edge.End))+1;
+        EdgeCount = edges;
+        
     }
 
     public int[,] AsArray()
@@ -54,6 +83,7 @@ public static class GraphMethods
         var adjacencyMatrix = new int[n, n];
         for (var i = 0; i < edges.Length; i++)
         {
+            // Console.WriteLine($"{Math.Abs(edges[i].Start)} , {edges[i].End}");
             adjacencyMatrix[Math.Abs(edges[i].Start) , edges[i].End] = edges[i].Weight;
             // if not directed
             if(edges[i].Start>0) adjacencyMatrix[edges[i].End , edges[i].Start] = edges[i].Weight;
