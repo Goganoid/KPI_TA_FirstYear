@@ -35,33 +35,23 @@ public static class GcAlgorithm
         {
             // fill with true
             bool[] available = new bool[graph.VertCount];
-            for (int j = 0; j < graph.VertCount; j++)
-            {
-                available[j] = true;
-            }
+            
             //O(E)
             foreach (var vertex in Adj[i])
             {
                 // if colored then make unavailable
-                if (result[vertex] != -1) available[result[vertex]] = false;
+                if (result[vertex] != -1) available[result[vertex]] = true;
             }
             
             int color;
             for (color = 0; color < graph.VertCount; color++)
             {
                 // first available color
-                if (available[color]) break;
+                if (available[color]==false) break;
             }
 
             result[i] = color;
-
+            if(print) Console.WriteLine($"Vertex:{i}|Color:{result[i]}");
         }
-
-        if(print)
-            for (int i = 0; i < graph.VertCount; i++)
-            {
-                Console.WriteLine($"Vertex:{i}|Color:{result[i]}");
-            }
-
     }
 }
